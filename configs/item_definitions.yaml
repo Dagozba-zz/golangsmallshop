@@ -1,0 +1,10 @@
+items:
+  VOUCHER:
+      name:  Company Voucher
+      price: 5.00
+  TSHIRT:
+      name: Company T-Shirt
+      price: 20.00
+  MUG:
+      name: Company Coffee Mug
+      price: 7.50

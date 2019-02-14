@@ -1,0 +1,76 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package checkout;
+
+import "google/protobuf/empty.proto";
+
+/*
+* This is the Checkout protocol buffers definition file
+* There are a four different RPC that will define the API of the Checkout service
+*/
+service Checkout {
+
+  //Creates a new Basket in the server, receives a BasketRequest message and produces a BasketReply
+  rpc CreateBasket (google.protobuf.Empty) returns (BasketReply) {}
+
+  //Scans an Item and adds it to the Basket which is referenced in the ItemRequest message. Returns an ItemReply
+  rpc ScanItem (ItemRequest) returns (ItemReply) {}
+
+  //Returns the total cost of a given basket, referenced in the TotalAmountRequest message and returns the amount in the TotalAmountReply
+  rpc GetTotalAmount (TotalAmountRequest) returns (TotalAmountReply) {}
+
+  //Removes the basket referenced in the RemoveBasketRequest message. Returns whether it was successful or not.
+  rpc RemoveBasket (RemoveBasketRequest) returns (RemoveBasketReply) {}
+}
+
+// The message containing the created basketId
+message BasketReply {
+  string basketId = 1;
+}
+
+//Item request message that sends the target basketId and the itemId (Pre defined in the server)
+message ItemRequest {
+  string basketId = 1;
+  string itemId = 2;
+}
+
+//Reply message when scanning a new item into the given basket
+message ItemReply {
+  bool result = 1;
+  string serverError = 2;
+}
+
+//Request message that sends the basketId to request the basket to calculate the total amount of
+message TotalAmountRequest {
+  string basketId = 1;
+}
+
+//Reply message containing the total price of items contained within the provided basketId
+message TotalAmountReply {
+  int64 totalAmount = 1;
+}
+
+//Request message that provides a basketId to remove it from the server
+message RemoveBasketRequest {
+  string basketId = 1;
+}
+
+//Reply message that provides the result of the delete request
+message RemoveBasketReply {
+  bool result = 1;
+  string serverError = 2;
+}

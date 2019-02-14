@@ -1,0 +1,11 @@
+rules:
+  nxmRules:
+  - affectedItem: VOUCHER
+    ruleName: "Buy N pay M Rule"
+    buyN: 2
+    payM: 1
+  bulkRules:
+  - affectedItem: TSHIRT
+    ruleName: "Bulk Rule"
+    triggerAmount: 3
+    discountPercentage: 5
